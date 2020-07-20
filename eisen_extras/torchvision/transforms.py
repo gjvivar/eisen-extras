@@ -7,11 +7,11 @@ from torchvision import transforms as tvt
 
 
 class PILImageTorchvisionTransforms:
-    """# TODO Torchvision transforms for PIL Image input.
-    """
+    """# TODO Torchvision transforms for PIL Image input."""
     def __init__(self, fields: List[str], transform):
         self.fields = fields
         self.transform = transform
+        self.expected_type = Image
 
     def __call__(self, data: dict) -> dict:
         for field in self.fields:
@@ -21,7 +21,7 @@ class PILImageTorchvisionTransforms:
 
     def _check_data_type(self, instance):
         """# TODO"""
-        if not isinstance(instance, Image):
+        if not isinstance(instance, self.expected_type):
             raise TypeError('Input must be of type PIL Image. Type %s is the current input.' % type(instance))
 
 
@@ -163,10 +163,11 @@ class ToTensor(PILImageTorchvisionTransforms):
     def __init__(self, fields: List[str], *args, **kwargs):
         transform = tvt.ToTensor(*args, **kwargs)
         super(ToTensor, self).__init__(fields, transform)
+        self.expected_type = (Image, np.ndarray)
 
     def _check_data_type(self, instance):
         """# TODO"""
-        if not isinstance(instance, (Image, np.ndarray)):
+        if not isinstance(instance, self.expected_type):
             raise TypeError('Input must be of type PIL.Image or numpy.ndarray. Type %s is the current input.' % type(
                 instance))
 
@@ -177,6 +178,7 @@ class TensorTorchvisionTransforms:
     def __init__(self, fields, transform):
         self.fields = fields
         self.transform = transform
+        self.expected_type = torch.Tensor
 
     def __call__(self, data: dict) -> dict:
         for field in self.fields:
@@ -186,7 +188,7 @@ class TensorTorchvisionTransforms:
 
     def _check_data_type(self, instance):
         """# TODO"""
-        if not isinstance(instance, torch.Tensor):
+        if not isinstance(instance, self.expected_type):
             raise TypeError('Input must be of type torch Tensor. Type %s is the current input.' % type(instance))
 
 
@@ -212,3 +214,4 @@ class ToPILImage(TensorTorchvisionTransforms):
     def __init__(self, fields: List[str], *args, **kwargs):
         transform = tvt.ToPILImage(*args, **kwargs)
         super(ToPILImage, self).__init__(fields, transform)
+        self.expected_type = (torch.Tensor, np.ndarray)
