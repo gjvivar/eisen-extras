@@ -191,6 +191,24 @@ class RandomChoice(tvt.RandomChoice):
         super(RandomChoice, self).__init__(transforms)
 
 
+class RandomOrder(tvt.RandomOrder):
+    r"""Apply in a random order a given list of transformations.
+
+    .. code-block:: python
+
+        from eisen_extras.torchvision.transforms import RandomOrder
+        transform = RandomOrder(list_of_transforms)
+        output = transform(data)
+
+    """
+    def __init__(self, transforms):
+        r"""
+        :param transforms: list of transforms
+        :type transforms: list of PILImageTorchvisionTransforms or TensorTorchvisionTransforms
+        """
+        super(RandomOrder, self).__init__(transforms)
+
+
 class RandomCrop(PILImageTorchvisionTransforms):
     r"""Crop the given PIL Image at a random location.
 
