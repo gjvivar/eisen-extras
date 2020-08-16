@@ -30,6 +30,7 @@ class CenterCrop(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import CenterCrop
+        data = {'input': input_pil_image}
         transform = CenterCrop(['input'], size=10)
         output = transform(data)
 
@@ -51,6 +52,7 @@ class ColorJitter(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import ColorJitter
+        data = {'input': input_pil_image}
         transform = ColorJitter(['input'], brightness=0, contrast=0, saturation=0, hue=0)
         output = transform(data)
 
@@ -72,6 +74,7 @@ class FiveCrop(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import FiveCrop
+        data = {'input': input_pil_image}
         transform = FiveCrop(['input'], size=4)
         output = transform(data)
 
@@ -93,6 +96,7 @@ class Grayscale(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import Grayscale
+        data = {'input': input_pil_image}
         transform = Grayscale(['input'], num_output_channels=1)
         output = transform(data)
 
@@ -114,6 +118,7 @@ class Pad(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import Pad
+        data = {'input': input_pil_image}
         transform = Pad(['input'], padding, fill=0, padding_mode='constant')
         output = transform(data)
 
@@ -135,6 +140,7 @@ class RandomAffine(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomAffine
+        data = {'input': input_pil_image}
         transform = RandomAffine(['input'], degrees, translate=None, scale=None, shear=None, resample=False,
                                  fillcolor=0)
         output = transform(data)
@@ -215,6 +221,7 @@ class RandomCrop(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomCrop
+        data = {'input': input_pil_image}
         transform = RandomCrop(['input'], size, padding=None, pad_if_needed=False, fill=0, padding_mode='constant')
         output = transform(data)
 
@@ -236,6 +243,7 @@ class RandomGrayscale(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomGrayscale
+        data = {'input': input_pil_image}
         transform = RandomGrayscale(['input'], p=0.1)
         output = transform(data)
 
@@ -257,6 +265,7 @@ class RandomHorizontalFlip(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomHorizontalFlip
+        data = {'input': input_pil_image}
         transform = RandomHorizontalFlip(['input'], p=0.5)
         output = transform(data)
 
@@ -278,6 +287,7 @@ class RandomPerspective(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomPerspective
+        data = {'input': input_pil_image}
         transform = RandomPerspective(['input'], distortion_scale=0.5, p=0.5, interpolation=Image.BICUBIC, fill=0)
         output = transform(data)
 
@@ -299,6 +309,7 @@ class RandomResizedCrop(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomResizedCrop
+        data = {'input': input_pil_image}
         transform = RandomResizedCrop(['input'], size, scale=(0.08, 1.0), ratio=(3. / 4., 4. / 3.),
                                       interpolation=PIL.Image.BILINEAR)
         output = transform(data)
@@ -321,6 +332,7 @@ class RandomRotation(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomRotation
+        data = {'input': input_pil_image}
         transform = RandomRotation(['input'], degrees, resample=False, expand=False, center=None, fill=None)
         output = transform(data)
 
@@ -342,6 +354,7 @@ class RandomVerticalFlip(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomVerticalFlip
+        data = {'input': input_pil_image}
         transform = RandomVerticalFlip(['input'], p=0.5)
         output = transform(data)
 
@@ -363,6 +376,7 @@ class Resize(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import Resize
+        data = {'input': input_pil_image}
         transform = Resize(['input'], size, interpolation=PIL.Image.BILINEAR)
         output = transform(data)
 
@@ -384,6 +398,7 @@ class TenCrop(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import TenCrop
+        data = {'input': input_pil_image}
         transform = TenCrop(['input'], size, vertical_flip=False)
         output = transform(data)
 
@@ -405,6 +420,7 @@ class ToTensor(PILImageTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import ToTensor
+        data = {'input': input_pil_image}
         transform = ToTensor(['input'], img)
         output = transform(data)
 
@@ -450,6 +466,7 @@ class LinearTransformation(TensorTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import LinearTransformation
+        data = {'input': input_tensor}
         transform = LinearTransformation(['input'], transformation_matrix, mean_vector)
         output = transform(data)
 
@@ -471,6 +488,7 @@ class Normalize(TensorTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import Normalize
+        data = {'input': input_tensor}
         transform = Normalize(['input'], mean, std, inplace=False)
         output = transform(data)
 
@@ -492,6 +510,7 @@ class RandomErasing(TensorTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomErasing
+        data = {'input': input_tensor}
         transform = RandomErasing(['input'], p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False)
         output = transform(data)
 
@@ -513,6 +532,7 @@ class ToPILImage(TensorTorchvisionTransforms):
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import ToPILImage
+        data = {'input': input_tensor}
         transform = ToPILImage(['input'], mode=None)
         output = transform(data)
 
@@ -536,7 +556,7 @@ class Lambda(tvt.Lambda):
 
         from eisen_extras.torchvision.transforms import Lambda
         input_tensor = torch.ones(3, 32, 32, dtype=torch.uint8).random_(0, 255)
-        input_data = {'input': input_tensor}
+        input_data = {'input': input_pil_image}
         transform = x_transforms.Compose([
             x_transforms.ToPILImage(['input']),
             x_transforms.TenCrop(['input'], 3),
@@ -568,7 +588,7 @@ class Compose(tvt.Compose):
 
         from eisen_extras.torchvision.transforms import Compose
         input_tensor = torch.ones(3, 32, 32, dtype=torch.uint8).random_(0, 255)
-        input_data = {'input': input_tensor}
+        input_data = {'input': input_pil_image}
         transform = x_transforms.Compose([
             x_transforms.ToPILImage(['input']),
             x_transforms.TenCrop(['input'], 3),
