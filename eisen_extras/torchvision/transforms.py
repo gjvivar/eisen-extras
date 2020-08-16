@@ -527,3 +527,59 @@ class ToPILImage(TensorTorchvisionTransforms):
         transform = tvt.ToPILImage(*args, **kwargs)
         super(ToPILImage, self).__init__(fields, transform)
         self.expected_type = (torch.Tensor, np.ndarray)
+
+
+class Lambda(tvt.Lambda):
+    r"""User-defined lambda function as a transform.
+
+    .. code-block:: python
+
+        from eisen_extras.torchvision.transforms import Lambda
+        input_tensor = torch.ones(3, 32, 32, dtype=torch.uint8).random_(0, 255)
+        input_data = {'input': input_tensor}
+        transform = x_transforms.Compose([
+            x_transforms.ToPILImage(['input']),
+            x_transforms.TenCrop(['input'], 3),
+            x_transforms.Lambda(['input'], lambda crops: [tvt.ToTensor()(crop) for crop in crops]),
+        ])
+        output = transform(input_data)
+
+    """
+    def __init__(self, fields, fn):
+        r"""
+        # :param fields: list of keynames in data dictionary to work on
+        # :type fields: list of str
+        :param fn: Lambda/function to be used for transform
+        :type fn: function
+        """
+        super(Lambda, self).__init__(fn)
+        self.fields = fields
+
+    def __call__(self, data: dict) -> dict:
+        for field in self.fields:
+            data[field] = self.lambd(data[field])
+        return data
+
+
+class Compose(tvt.Compose):
+    r"""Compose given list of transforms together.
+
+    .. code-block:: python
+
+        from eisen_extras.torchvision.transforms import Compose
+        input_tensor = torch.ones(3, 32, 32, dtype=torch.uint8).random_(0, 255)
+        input_data = {'input': input_tensor}
+        transform = x_transforms.Compose([
+            x_transforms.ToPILImage(['input']),
+            x_transforms.TenCrop(['input'], 3),
+            x_transforms.Lambda(['input'], lambda crops: [tvt.ToTensor()(crop) for crop in crops]),
+        ])
+        output = transform(input_data)
+
+    """
+    def __init__(self, t_list):
+        r"""
+        :param t_list: List of transforms
+        :type t_list: list of PILImageTorchvisionTransforms or TensorTorchvisionTransforms
+        """
+        super(Compose, self).__init__(t_list)
