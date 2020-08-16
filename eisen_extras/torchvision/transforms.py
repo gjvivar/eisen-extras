@@ -151,46 +151,44 @@ class RandomAffine(PILImageTorchvisionTransforms):
         super(RandomAffine, self).__init__(fields, transform)
 
 
-class RandomApply(PILImageTorchvisionTransforms):
+class RandomApply(tvt.RandomApply):
     r"""Randomly apply a list of transformations with a given probability of p.
 
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomApply
-        transform = RandomApply(['input'], list_of_transforms, p=0.5)
+        transform = RandomApply(list_of_transforms, p=0.5)
         output = transform(data)
 
     """
-    def __init__(self, fields: List[str], *args, **kwargs):
+
+    def __init__(self, transforms, p=0.5):
         r"""
-        :param fields: list of keynames in data dictionary to work on
-        :type fields: list of str
-        :param \*args: Additional argument list for this transform.
-        :param \**kwargs: Additional keyword arguments for this transform.
+        :param transforms: list of transforms
+        :type transforms: list of PILImageTorchvisionTransforms or TensorTorchvisionTransforms
+        :param p: probability
+        :type p: float
         """
-        transform = tvt.RandomApply(*args, **kwargs)
-        super(RandomApply, self).__init__(fields, transform)
+        super(RandomApply, self).__init__(transforms, p=p)
 
 
-class RandomChoice(PILImageTorchvisionTransforms):
+class RandomChoice(tvt.RandomChoice):
     r"""Randomly pick a single transformation from a given list of transformation then apply this transformation.
 
     .. code-block:: python
 
         from eisen_extras.torchvision.transforms import RandomChoice
-        transform = RandomChoice(['input'], list_of_transforms)
+        transform = RandomChoice(list_of_transforms)
         output = transform(data)
 
     """
-    def __init__(self, fields: List[str], *args, **kwargs):
+
+    def __init__(self, transforms):
         r"""
-        :param fields: list of keynames in data dictionary to work on
-        :type fields: list of str
-        :param \*args: Additional argument list for this transform.
-        :param \**kwargs: Additional keyword arguments for this transform.
+        :param transforms: list of transforms
+        :type transforms: list of PILImageTorchvisionTransforms or TensorTorchvisionTransforms
         """
-        transform = tvt.RandomChoice(*args, **kwargs)
-        super(RandomChoice, self).__init__(fields, transform)
+        super(RandomChoice, self).__init__(transforms)
 
 
 class RandomCrop(PILImageTorchvisionTransforms):
