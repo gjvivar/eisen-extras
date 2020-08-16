@@ -259,3 +259,48 @@ class TestTensorTransforms:
             input_data = {'input': input_tensor}
             transform = x_transforms.ToPILImage(['input'])
             transform(input_data)
+
+    def test_linear_transformation(self):
+        input_tensor = torch.ones(1, 9, 9, dtype=torch.uint8).random_(0, 255)
+        input_data = {'input': input_tensor}
+        trans_matrix = torch.randn(81).diag()
+        mean_vector = torch.randn(81)
+        expected_output = tvt.Compose([
+            tvt.LinearTransformation(trans_matrix, mean_vector),
+        ])(input_tensor)
+
+        transform = x_transforms.Compose([
+            x_transforms.LinearTransformation(['input'], trans_matrix, mean_vector),
+        ])
+        output = transform(input_data)
+        assert torch.allclose(output['input'], expected_output)
+
+    def test_normalize(self):
+        input_tensor = torch.ones(3, 9, 9, dtype=torch.uint8).random_(0, 255).float().div_(255)
+        input_data = {'input': input_tensor}
+        mean_ = torch.mean(input_tensor, (1, 2))
+        std_ = torch.std(input_tensor, (1, 2))
+        expected_output = tvt.Compose([
+            tvt.Normalize(mean_, std_),
+        ])(input_tensor)
+
+        transform = x_transforms.Compose([
+            x_transforms.Normalize(['input'], mean_, std_)
+        ])
+        output = transform(input_data)
+        assert torch.allclose(output['input'], expected_output)
+
+    def test_random_erasing(self):
+        input_tensor = torch.ones(3, 9, 9, dtype=torch.uint8).random_(0, 255).float().div_(255)
+        input_data = {'input': input_tensor}
+        random.seed(0)
+        expected_output = tvt.Compose([
+            tvt.RandomErasing(),
+        ])(input_tensor)
+
+        random.seed(0)
+        transform = x_transforms.Compose([
+            x_transforms.RandomErasing(['input'])
+        ])
+        output = transform(input_data)
+        assert torch.allclose(output['input'], expected_output)
